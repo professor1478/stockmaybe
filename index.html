@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="style.css" />
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>그 때 주식을 샀다면 지금 내 재산은?</title>
+		<meta name="title" content="Stock Maybe" />
+		<meta
+			name="subject"
+			content="내가 그 때 이 주식, 코인을 샀더라면 지금 내 재산은 어떻게 됐을까?"
+		/>
+		<meta
+			name="keywords"
+			content="주식, 코인, 제태크, 주가, 경제, 삼성전자, 테슬라, 코인, 비트코인, 이더리움, 업비트, 블록체인, stock, 양봉, 음봉, 불장, 물타기, 하락장, 코스피, 코스닥"
+		/>
+		<meta name="author" content="김동민, 김명비" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="내가 그 때 이 주식, 코인을 샀더라면 지금 내 재산은?" />
+		<meta
+			property="og:description"
+			content="내가 그때 이 주식, 코인을 샀더라면 지금 내 재산은 어떻게 됐을까?"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#" style="padding: 3%; font-size: 1.5rem;"
+					>Stock Maybe</a
+				>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNavDropdown"
+					aria-controls="navbarNavDropdown"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavDropdown">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#"
+								>내가 그 때 주식을 샀다면?</a
+							>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">내가 그 때 코인을 샀다면?(준비중)</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">고객센터(준비중)</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div id="chartdiv"></div>
+		<!-- Optional JavaScript; choose one of the two! -->
+
+		<!-- Option 1: Bootstrap Bundle with Popper -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+			crossorigin="anonymous"
+		></script>
+		<div style="width: 320px; margin: 0 auto;"></div>
+		<h1 style="text-align: center; margin-top: 7%;">
+			내가 그 때 주식을 샀다면,<br /><br />
+			내 재산은 얼마가 되었을까?
+		</h1>
+		<br />
+		<p style="text-align: center; margin: 3%; font-size: 1.3rem;">
+			-주식편-
+		</p>
+		<br /><br />
+		<!--Graph charts inspired by https://dribbble.com/shots/1876534-Stats-animation?list=following&offset=4-->
+		<div class="row mb-3">
+			<p align="center">Seed를 입력하세요</p>
+			<br /><br />
+			<div class="col-sm-10">
+				<input
+					align="center"
+					type="text"
+					class="form-control"
+					id="colFormLabel"
+					placeholder="ex) 10,000,000,000(원)"
+				/>
+			</div>
+		</div>
+		<br />
+		<p>돌아가고 싶은 날짜를 선택하세요</p>
+		<br />
+		<select id="mounth">
+			<option value="hide">-- Month --</option>
+			<option value="january" rel="icon-temperature">1월</option>
+			<option value="february">2월</option>
+			<option value="march">3월</option>
+			<option value="april">4월</option>
+			<option value="may">5월</option>
+			<option value="june">6월</option>
+			<option value="july">7월</option>
+			<option value="august">8월</option>
+			<option value="september">9월</option>
+			<option value="october">10월</option>
+			<option value="november">11월</option>
+			<option value="december">12월</option>
+		</select>
+
+		<select id="year">
+			<option value="hide">-- Year --</option>
+			<option value="2010">2015</option>
+			<option value="2011">2016</option>
+			<option value="2012">2017</option>
+			<option value="2013">2018</option>
+			<option value="2014">2019</option>
+			<option value="2015">2020</option>
+		</select>
+		<br /><br /><br />
+		<h3>내가 이 때 삼성전자를 샀다면....</h3>
+		<br />
+		<nav>지금은</nav>
+		<div id="number" style="margin-top: 0;">0</div>
+		<nav>원</nav>
+		<br /><br /><br /><br /><br />
+		<div class="main-content">
+			<div class="header-stocks">
+				<div class="header-stock-container dji-container">
+					<div class="stock-entry dji">
+						<article class="header-stock-name">Dow Jones</article>
+						<article class="header-stock-price stock-price">0</article>
+						<div class="header-stock-change-container">
+							<span class="header-stock-change stock-change"></span>
+							<span class="header-stock-changepct stock-changepct"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="header-stock-container inx-container">
+					<article class="header-stock-name">S P 500</article>
+				</div>
+
+				<div class="header-stock-container ixic-container">
+					<article class="header-stock-name">NASDAQ</article>
+				</div>
+
+				<div calss="header-stock-container nya-container">
+					<article class="header-stock-name">NYSE Composite</article>
+				</div>
+			</div>
+
+			<div class="stock-ticker-01"></div>
+			<div class="stock-ticker-02"></div>
+		</div>
+
+		<script src="https://code.highcharts.com/stock/highstock.js"></script>
+		<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+		<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+
+		<div id="container" style="height: 400px; min-width: 310px;"></div>
+
+		<script>
+			Highcharts.setOptions({
+				global: {
+					useUTC: false,
+				},
+			});
+
+			// Create the chart
+			Highcharts.stockChart('container', {
+				chart: {
+					events: {
+						load: function () {
+							// set up the updating of the chart each second
+							var series = this.series[0];
+							setInterval(function () {
+								var x = new Date().getTime(), // current time
+									y = Math.round(Math.random() * 100);
+								series.addPoint([x, y], true, true);
+							}, 1000);
+						},
+					},
+				},
+
+				rangeSelector: {
+					buttons: [
+						{
+							count: 1,
+							type: 'minute',
+							text: '1M',
+						},
+						{
+							count: 5,
+							type: 'minute',
+							text: '5M',
+						},
+						{
+							type: 'all',
+							text: 'All',
+						},
+					],
+					inputEnabled: false,
+					selected: 0,
+				},
+
+				title: {
+					text: '삼성전자',
+				},
+
+				exporting: {
+					enabled: false,
+				},
+
+				series: [
+					{
+						name: 'Random data',
+						data: (function () {
+							// generate an array of random data
+							var data = [],
+								time = new Date().getTime(),
+								i;
+
+							for (i = -999; i <= 0; i += 1) {
+								data.push([time + i * 1000, Math.round(Math.random() * 100)]);
+							}
+							return data;
+						})(),
+					},
+				],
+			});
+		</script>
+		<script>
+			let number = document.getElementById('number');
+
+			let start = 20;
+			let end = 98776544;
+			let ticks = 20;
+			let speed = 50;
+
+			let randomNumbers = [end];
+
+			for (let i = 0; i < ticks - 1; i++) {
+				randomNumbers.unshift(Math.floor(Math.random() * (end - start + 1) + start));
+			}
+
+			randomNumbers.sort((a, b) => {
+				return a - b;
+			});
+
+			console.log(randomNumbers.length);
+
+			let x = 0;
+			let interval = setInterval(function () {
+				number.innerHTML = randomNumbers.shift();
+
+				if (++x === ticks) {
+					window.clearInterval(interval);
+				}
+			}, speed);
+		</script>
+		<script>
+			/*
+Reference: http://jsfiddle.net/BB3JK/47/
+*/
+
+			$('select').each(function () {
+				var $this = $(this),
+					numberOfOptions = $(this).children('option').length;
+
+				$this.addClass('select-hidden');
+				$this.wrap('<div class="select"></div>');
+				$this.after('<div class="select-styled"></div>');
+
+				var $styledSelect = $this.next('div.select-styled');
+				$styledSelect.text($this.children('option').eq(0).text());
+
+				var $list = $('<ul />', {
+					class: 'select-options',
+				}).insertAfter($styledSelect);
+
+				for (var i = 0; i < numberOfOptions; i++) {
+					$('<li />', {
+						text: $this.children('option').eq(i).text(),
+						rel: $this.children('option').eq(i).val(),
+					}).appendTo($list);
+				}
+
+				var $listItems = $list.children('li');
+
+				$styledSelect.click(function (e) {
+					e.stopPropagation();
+					$('div.select-styled.active')
+						.not(this)
+						.each(function () {
+							$(this).removeClass('active').next('ul.select-options').hide();
+						});
+					$(this).toggleClass('active').next('ul.select-options').toggle();
+				});
+
+				$listItems.click(function (e) {
+					e.stopPropagation();
+					$styledSelect.text($(this).text()).removeClass('active');
+					$this.val($(this).attr('rel'));
+					$list.hide();
+					//console.log($this.val());
+				});
+
+				$(document).click(function () {
+					$styledSelect.removeClass('active');
+					$list.hide();
+				});
+			});
+		</script>
+		<script>
+			$(document).ready(function () {
+				//PRELOADER FUNCTIONS//
+				function preloader() {
+					$('.preloader-container').fadeOut();
+				}
+
+				$(window).on('load', preloader);
+				//
+
+				function gridData() {
+					var results = new Object();
+					var entry = new Object();
+					var entries = new Object();
+					$.ajax({
+						url:
+							'https://spreadsheets.google.com/feeds/list/1YW0tuvihmAHlkj8tgdk-gzc6_pdCKPpN_LtrZnW6XQM/1/public/basic?alt=json',
+						success: function (data) {
+							//console.log(data);
+							results = data.feed.entry;
+							var entries = {};
+
+							for (var i = 0; i < results.length; i++) {
+								var entry = results[i];
+								entries[i] = entry.content.$t;
+
+								var inx = entries[0];
+								var dji = entries[1];
+								var ixic = entries[2];
+								var nya = entries[3];
+							}
+							console.log(entries);
+							console.log(inx);
+
+							var inxObj = split(inx);
+							var djiObj = split(dji);
+							var ixicObj = split(ixic);
+							var nyaObj = split(nya);
+							console.log(inxObj);
+							console.log(djiObj);
+							console.log(ixicObj);
+							console.log(nyaObj);
+
+							updateValues(djiObj);
+						},
+					});
+				}
+
+				function gridDataAlt() {
+					var results = new Object();
+					var content = new Object();
+					var entries = new Object();
+					var entriesList = new Object();
+					var contentArray = new Array();
+					$.ajax({
+						url:
+							'https://spreadsheets.google.com/feeds/list/1YW0tuvihmAHlkj8tgdk-gzc6_pdCKPpN_LtrZnW6XQM/1/public/basic?alt=json',
+						success: function (data) {
+							//console.log(data);
+							results = data.feed.entry;
+							//console.log(results);
+							$.each(results, function (i, val) {
+								content = data.feed.entry[i].content.$t;
+								contentArray = $.makeArray(content);
+								//contentArray = contentArrayInit.toArray();
+								console.log(contentArray);
+								entries = $.map(contentArray, function (i) {
+									var split = i.split(', ');
+									var split1 = split[0];
+									var split2 = split[1];
+									var split3 = split[2];
+									var split4 = split[3];
+									var split5 = split[4];
+									var split6 = split[5];
+									var split7 = split[6];
+
+									var symbolSplit = split1.split(': ');
+									var symbol = symbolSplit[1];
+
+									var priceSplit = split2.split(': ');
+									var price = priceSplit[1];
+
+									var changeSplit = split3.split(': ');
+									var change = changeSplit[1];
+
+									var changePctSplit = split4.split(': ');
+									var changePct = changePctSplit[1];
+
+									var highSplit = split5.split(': ');
+									var high = highSplit[1];
+
+									var lowSplit = split6.split(': ');
+									var low = lowSplit[1];
+
+									var timeDelaySplit = split7.split(': ');
+									var timeDelay = timeDelaySplit[1];
+
+									var entry = new Array();
+
+									entry = [
+										symbol,
+										price,
+										change,
+										changePct,
+										high,
+										low,
+										timeDelay,
+									];
+
+									return entry;
+								});
+
+								//try looping through each entry
+							});
+						},
+					});
+				}
+
+				function split(val) {
+					var splitVal = val.split(', ');
+
+					var symbolInit = splitVal[0];
+					var priceInit = splitVal[1];
+					var changeInit = splitVal[2];
+					var changePctInit = splitVal[3];
+					var highInit = splitVal[4];
+					var lowInit = splitVal[5];
+
+					var symbolSplit = symbolInit.split(': ');
+					var priceSplit = priceInit.split(': ');
+					var changeSplit = changeInit.split(': ');
+					var changePctSplit = changePctInit.split(': ');
+					var highSplit = highInit.split(': ');
+					var lowSplit = lowInit.split(': ');
+
+					var symbol = symbolSplit[1];
+					var price = priceSplit[1];
+					var change = changeSplit[1];
+					var changePct = changePctSplit[1];
+					var high = highSplit[1];
+					var low = lowSplit[1];
+
+					return {
+						symbol: symbol,
+						price: price,
+						change: change,
+						changePct: changePct,
+						high: high,
+						low: low,
+					};
+				}
+
+				function updateValues(obj) {
+					var symbol = obj.symbol;
+					var price = obj.price;
+					var changeVal = obj.change;
+					var changeInit = parseInt(obj.change);
+					var changePct = obj.changePct;
+					var high = obj.high;
+					var low = obj.low;
+
+					if (changeInit < 0) {
+						var change = '-' + changeVal;
+					} else if (changeInit > 0) {
+						var change = '+' + changeVal;
+					} else {
+						var change = changeVal;
+					}
+
+					var thisDiv = $('.stock-entry').attr('class', symbol);
+					var thisPrice = thisDiv.find('.stock-price');
+					var thisChange = thisDiv.find('.stock-change');
+					var thisChangePct = thisDiv.find('.stock-changepct');
+
+					thisPrice.text(price);
+					thisChange.text(change);
+					thisChangePct.text(changePct + '%');
+				}
+
+				$(window).on('load', function () {
+					gridData();
+				});
+
+				setInterval(function () {
+					gridData();
+				}, 30000);
+			});
+		</script>
+		<!--Copyright (c) 2021 by couth (https://codepen.io/iamcouth/pen/dKVmqb)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
+	<!--	Copyright (c) 2021 by Dave Beshero (https://codepen.io/hankthewhale/pen/NwKvLy)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.-->
+
+
+	</body>
+	
+
+
+</html>
