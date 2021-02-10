@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+        <style>
+            table {border-collapse: collapse}
+            td, th {padding:5px; width:120px}
+        </style>
+        <script src="https://code.jquery.com/jquery-1.4.4.min.js"></script>
+        <script>
+            // 전역 변수 세팅
+            var usd = 0;
+            var alert_array = new Array();
+            
+            // 천단위 콤마 함수
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            // 숫자 외 문자열 제거 함수
+            function numberDeleteChar(x) {
+                return x.toString().replace(/[^0-9]+/g, '');
+            }
+            
+            // 달러 환율 함수 (ajax 동기식) <현재 URL이 막혀 밑의 함수로 대체합니다.>
+            function usdkrw_(){
+                $.ajax({
+                    type: 'GET',
+                    async: false, //동기식 처리
+                    url:'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%3D%22USDKRW%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys',
+                    success: function(data) {
+                    usd = parseFloat(data['query']['results']['rate']['Rate']); // 전역변수에 저장하여 활용
+                    $('#USDKRW').html('환율 : $1 = \\' + usd);
+                    }
+                });
+            }
+
+            // 달러 환율 함수 (ajax 동기식) <2017.09.18 수정>
+            function usdkrw(){
+                $.ajax({
+                    type: 'GET',
+                    async: false, //동기식 처리
+                    url:'http://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=c4l1&s=USDKRW=X',
+                    success: function(data) {
+                    usd = parseFloat(data.split(",")[1]); // 전역변수에 저장하여 활용
+                    $('#USDKRW').html('환율 : $1 = \\' + usd);
+                    }
+                });
+            }
+            
+            // 폴로닉스 함수 (환율 함수와 함께 적용되어야함)
+            /*function poloniex(){
+                $.get('https://poloniex.com/public?command=returnTicker', function(data) {
+                    var poloniex_btc = parseFloat(data['USDT_BTC']['last']);
+                    var poloniex_eth = parseFloat(data['USDT_ETH']['last']);
+                    var poloniex_xrp = parseFloat(data['USDT_XRP']['last']);
+                    $('#poloniex_BTC').html('\\ ' + numberWithCommas(Math.round(usd * poloniex_btc))); // 거래소 시세 정보 표에 값 세팅
+                    $('#poloniex_ETH').html('\\ ' + numberWithCommas(Math.round(usd * poloniex_eth)));
+                    $('#poloniex_XRP').html('\\ ' + numberWithCommas(Math.round(usd * poloniex_xrp)));
+                });
+            }
+            
+            // 코인원 함수
+            function coinone(){
+                $.get('https://api.coinone.co.kr/ticker?currency=all', function(data) {
+                    var coinone_btc = parseFloat(data['btc']['last']);
+                    var coinone_eth = parseFloat(data['eth']['last']);
+                    var coinone_xrp = parseFloat(data['xrp']['last']);
+                    $('#coinone_BTC').html('\\ ' + numberWithCommas(coinone_btc)); // 거래소 시세 정보 표에 값 세팅
+                    $('#coinone_ETH').html('\\ ' + numberWithCommas(coinone_eth));
+                    $('#coinone_XRP').html('\\ ' + numberWithCommas(coinone_xrp));
+                });
+            }
+            */
+            // 빗썸 함수 (크로스도메인 문제로 익스에서만 됨)
+            function bithumb(){
+                $.get('https://api.bithumb.com/public/ticker/ALL', function(data) {
+                    var bithumb_btc = parseFloat(data['data']['BTC']['closing_price']);
+                    var bithumb_eth = parseFloat(data['data']['ETH']['closing_price']);
+                    var bithumb_xrp = parseFloat(data['data']['XRP']['closing_price']);
+                    $('#bithumb_BTC').html('\\ ' + numberWithCommas(bithumb_btc)); // 거래소 시세 정보 표에 값 세팅
+                    $('#bithumb_ETH').html('\\ ' + numberWithCommas(bithumb_eth));
+                    $('#bithumb_XRP').html('\\ ' + numberWithCommas(bithumb_xrp));
+                });
+            }
+			
+            
+            
+
+            // 현재 시간 갱신
+            function CurrentTime() {
+                var d = new Date();
+                $("#lastUpdate").html(d.toString());
+            }
+            
+            // 갱신 함수
+            function proc() {
+                try {
+                    usdkrw(); // 환율
+                    //poloniex(); // 폴로닉스
+                   // coinone(); // 코인원
+                    bithumb(); // 빗썸
+                   // korbit(); // 코빗
+					upbit();
+                    alert_start(); // 알람 확인
+                    CurrentTime(); // 갱신 시간
+                } catch(e){
+                    
+                } finally {
+                    setTimeout("proc()", 10000); //10초후 재시작
+                }
+            }
+        </script>
+    </head>
+    <body onLoad="proc()">
+        <!-- 환율 정보 -->
+        <span id="USDKRW"></span>
+        
+        <!-- 거래소 시세 정보 -->
+        <table border=1>
+            <tr>
+                <th></th>
+               
+                <th>빗썸</th>
+                
+				
+            </tr>
+            <tr>
+                <td>비트코인</td>
+                
+              
+                <td id="bithumb_BTC"></td>
+               
+				
+            </tr>
+            <tr>
+                <td>이더리움</td>
+               
+                
+                <td id="bithumb_ETH"></td>
+                
+				
+            </tr>
+            <tr>
+                <td>리플</td>
+            
+                <td id="bithumb_XRP"></td>
+                
+				
+            </tr>
+            <tr>
+                <td>최근 갱신 시간</td>
+                <td colspan="4" id="lastUpdate"></td>
+            </tr>
+        </table>
+        
+    </body>
+</html>
